@@ -1,13 +1,35 @@
-from core.models import AnimalModel
-from ninja import Router
+from typing import Optional, List
+
+from django.db.models import Q
+
+from core.models import AnimalModel, AnimalGenderChoices
+from ninja import Router, Schema, Query, FilterSchema
 
 
 core_router = Router()
 
+class AnimalsFilterSchema(FilterSchema):
+    gender: Optional[str]
+    vaccinated: Optional[bool]
+
+    def custom_expression(self) -> Q:
+        filter_criteria = Q()
+
+        if self.vaccinated is not None:
+            filter_criteria = filter_criteria & Q(vaccinated=self.vaccinated)
+        return filter_criteria
+
+
+
+
 @core_router.get("/animals")
-def get_animals(request):
+def get_animals(request, filters: AnimalsFilterSchema = Query(...)):
+
+    filtered_animals = filters.filter(
+        AnimalModel.objects.all()  # Queryset que contiene todos los animales
+    )
     animals = []
-    for animal in AnimalModel.objects.filter():
+    for animal in filtered_animals:
         animals.append({
             "name": animal.name,
             "gender": animal.gender,
@@ -18,4 +40,4 @@ def get_animals(request):
             "picture": animal.picture.url,
 
         })
-        return{"animals":animals}
+        return{"animals": animals}

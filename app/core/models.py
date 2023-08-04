@@ -13,7 +13,7 @@ class AnimalVaccinatedChoices(models.TextChoices):
 class AnimalModel(models.Model):
     name = models.CharField(max_length=50)
     gender = models.CharField(max_length=20, choices=AnimalGenderChoices.choices)
-    vaccinated = models.CharField(max_length=15, choices=AnimalVaccinatedChoices.choices)
+    vaccinated = models.BooleanField()
     breed = models.CharField(max_length=50)
     age = models.DateField()
     description = models.TextField()

@@ -1,0 +1,54 @@
+
+body{
+   padding-left: 50px;
+    padding-right: 50px;
+}
+.logo img{
+   width: 200px;
+    margin-top: 50px;
+}
+h1,h2{
+    font-family: 'calibri';
+    text-align: center;
+
+}
+
+
+.card {
+    margin-top: 50px;
+    width: 100%;
+
+    border-color: white;
+    background-color:#EAF2F8!important;
+    align-items: center;
+}
+
+
+
+footer {
+    margin-top: 100px;
+    background-color: #fee7ef;
+    height: 200px;
+}
+.footer-style h1 {
+    padding-top: 75px;
+
+}
+
+select {
+    max-width: 300px;
+    min-width: 200px;
+    height: 30px;
+}
+
+input{
+    max-width: 300px;
+    min-width: 200px;
+    height: 30px;
+}
+.toolbar.row{
+    background-color:#EAF2F8;
+    height: 100px;
+    align-items: center;
+    width: auto;
+}
