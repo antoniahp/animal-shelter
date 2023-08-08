@@ -3,9 +3,11 @@ from django.db.models import Q
 from django.shortcuts import render
 
 from core.models import AnimalModel
+from django.shortcuts import redirect
+from django.urls import reverse
 
 
-def home(request):
+"""def home(request):
     filter_criteria = Q()
 
     if request.method == 'POST':
@@ -32,6 +34,18 @@ def home(request):
 
     context = {
         "animals": AnimalModel.objects.filter(filter_criteria)
+
+    }
+    return render(request, "home.html", context) """
+
+def home(request):
+    if request.method == 'POST':
+        vaccinated = request.POST.get("vaccinated")
+        gender = request.POST.get("gender")
+        age = request.POST.get("age")
+
+    context = {
+
 
     }
     return render(request, "home.html", context)
