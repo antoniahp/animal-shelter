@@ -11,12 +11,20 @@ core_router = Router()
 class AnimalsFilterSchema(FilterSchema):
     gender: Optional[str]
     vaccinated: Optional[bool]
+    born_year: Optional[int]
 
     def custom_expression(self) -> Q:
         filter_criteria = Q()
 
         if self.vaccinated is not None:
             filter_criteria = filter_criteria & Q(vaccinated=self.vaccinated)
+
+        if self.gender is not None:
+            filter_criteria = filter_criteria & Q(gender=self.gender)
+
+        if self.born_year is not None:
+            filter_criteria = filter_criteria & Q(age__year=self.born_year)
+
         return filter_criteria
 
 
@@ -40,4 +48,5 @@ def get_animals(request, filters: AnimalsFilterSchema = Query(...)):
             "picture": animal.picture.url,
 
         })
-        return{"animals": animals}
+
+    return{"animals": animals}

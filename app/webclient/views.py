@@ -1,4 +1,4 @@
-from django.contrib.sites import requests
+import requests
 from django.db.models import Q
 from django.shortcuts import render
 
@@ -39,13 +39,27 @@ from django.urls import reverse
     return render(request, "home.html", context) """
 
 def home(request):
+    query_params = {}
     if request.method == 'POST':
         vaccinated = request.POST.get("vaccinated")
+        if vaccinated != "":
+            query_params["vaccinated"] = vaccinated
+
         gender = request.POST.get("gender")
+        if gender != "":
+            query_params["gender"] = gender
+
         age = request.POST.get("age")
+        if age != "":
+            query_params["age"] = age
 
+    response = requests.get(url="http://localhost:8000/api/core/animals", params=query_params)
+    response.raise_for_status()
+
+
+    animal_list_from_api = response.json()["animals"]
     context = {
-
+        "animals": animal_list_from_api
 
     }
     return render(request, "home.html", context)
